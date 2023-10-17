@@ -10,55 +10,22 @@ public class KidDarkState : KidState
 
     public override void Enter()
     {
-        //Controller.FollowTargets = FindNearestHideSpot();
-    }
-
-    private FollowTarget FindNearestHideSpot()
-    {
-        if (Controller.HideSpots.Count > 0)
-        {
-            float shortestDistance = 0f;
-            HideSpot nearestSpot = null;
-
-            for (int i = 0; i < Controller.HideSpots.Count; i++)
-            {
-                float distance = (Controller.HideSpots[i].transform.position - Controller.transform.position).magnitude;
-
-                if (i == 0)
-                {
-                    shortestDistance = distance;
-                    nearestSpot = Controller.HideSpots[i];
-                }
-                else
-                {
-                    if (distance < shortestDistance)
-                    {
-                        shortestDistance = distance;
-                        nearestSpot = Controller.HideSpots[i];
-                    }
-                }
-            }
-
-            Controller.HideSpots.Clear();
-            return nearestSpot.GetComponent<FollowTarget>();
-        } else
-        {
-            return null;
-        }
     }
 
     public override void Exit()
     {
     }
 
-    //public override void OnTriggerEnter(Collider2D collision)
-    //{
-    //    base.OnTriggerEnter(collision);
+    public override void OnTriggerEnter(Collider2D collision)
+    {
+        base.OnTriggerEnter(collision);
 
-    //    if (collision.GetComponent<PlayerController>())
-    //    {
-    //        Controller.FollowTarget = collision.GetComponent<FollowTarget>();
-    //        Controller.ChangeState(new KidLightState(Controller));
-    //    }
-    //}
+        if (collision.GetComponent<PlayerController>())
+        {
+            Controller.ChangeState(new KidLightState(Controller));
+        } else if (collision.GetComponent<HideSpot>())
+        {
+            Controller.ChangeState(new KidHiddenState(Controller, collision.GetComponent<HideSpot>()));
+        }
+    }
 }

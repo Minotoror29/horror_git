@@ -16,27 +16,13 @@ public class KidLightState : KidState
     {
     }
 
-    public override void OnTriggerEnter(Collider2D collision)
+    public override void OnTriggerExit(Collider2D collision)
     {
-        base.OnTriggerEnter(collision);
+        base.OnTriggerExit(collision);
 
-        if (collision.GetComponent<HideSpot>())
+        if (collision.GetComponent<PlayerController>())
         {
-            Controller.HideSpots.Add(collision.GetComponent<HideSpot>());
+            Controller.ChangeState(new KidDarkState(Controller));
         }
     }
-
-    //public override void OnTriggerExit(Collider2D collision)
-    //{
-    //    base.OnTriggerExit(collision);
-
-    //    if (collision.GetComponent<PlayerController>())
-    //    {
-    //        Controller.FollowTarget = null;
-    //        Controller.ChangeState(new KidDarkState(Controller));
-    //    } else if (collision.GetComponent<HideSpot>())
-    //    {
-    //        Controller.HideSpots.Remove(collision.GetComponent<HideSpot>());
-    //    }
-    //}
 }

@@ -138,6 +138,8 @@ public class KidController : MonoBehaviour
         {
             _followTargets.Add(target);
         }
+
+        _currentState.OnTriggerEnter(collision);
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -147,5 +149,7 @@ public class KidController : MonoBehaviour
         {
             _followTargets.Remove(target);
         }
+
+        _currentState.OnTriggerExit(collision);
     }
 }

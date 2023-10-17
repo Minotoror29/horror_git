@@ -20,4 +20,14 @@ public class KidHiddenState : KidState
     {
         
     }
+
+    public override void OnTriggerEnter(Collider2D collision)
+    {
+        base.OnTriggerEnter(collision);
+
+        if (collision.GetComponent<PlayerController>())
+        {
+            Controller.ChangeState(new KidLightState(Controller));
+        }
+    }
 }
