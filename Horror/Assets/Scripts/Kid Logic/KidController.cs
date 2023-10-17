@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem.XR;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Rigidbody2D))]
@@ -11,10 +12,12 @@ public class KidController : MonoBehaviour
     private KidState _currentState;
 
     [Header("Target")]
-    [SerializeField] private Transform followTarget;
     [SerializeField] private float stopDistance = 1f;
     [SerializeField] private float runDistance = 5f;
+    private Transform _followTarget;
     private float _targetDistance;
+
+    public List<HideSpot> _hideSpots;
 
     [Header("Movement")]
     [SerializeField] private float walkSpeed = 100f;
@@ -29,7 +32,9 @@ public class KidController : MonoBehaviour
 
     public float StopDistance { get { return stopDistance; } }
     public float RunDistance { get { return runDistance; } }
+    public Transform FollowTarget { get { return _followTarget; } set { _followTarget = value; } }
     public float TargetDistance { get { return _targetDistance; } }
+    public List<HideSpot> HideSpots { get { return _hideSpots; } }
     public float MaxStamina { get { return maxStamina; } }
     public float CurrentStamina { get { return _currentStamina; } }
 
@@ -51,24 +56,37 @@ public class KidController : MonoBehaviour
     public void Initialize()
     {
         _rb = GetComponent<Rigidbody2D>();
-
+        _hideSpots = new();
         _currentStamina = maxStamina;
 
-        ChangeState(new KidIdleState(this));
+        KidState startState = new KidShadowState(this);
+        ChangeState(startState);
+        startState.ChangeSubstate(new KidIdleState(this));
     }
 
     public void ChangeState(KidState nextState)
     {
+        State substate = _currentState?.CurrenSubstate;
         _currentState?.Exit();
         _currentState = nextState;
         _currentState.Enter();
+        if (substate != null)
+        {
+            _currentState.ChangeSubstate(substate);
+        }
     }
 
     public void UpdateLogic()
     {
         _currentState.UpdateLogic();
 
-        _targetDistance = (followTarget.position - transform.position).magnitude;
+        if (_followTarget != null)
+        {
+            _targetDistance = (_followTarget.position - transform.position).magnitude;
+        } else
+        {
+            _targetDistance = -1f;
+        }
 
         UpdateStaminaBar();
     }
@@ -85,12 +103,12 @@ public class KidController : MonoBehaviour
 
     public void WalkTowardsTarget()
     {
-        _rb.velocity = walkSpeed * Time.fixedDeltaTime * (followTarget.position - transform.position).normalized;
+        _rb.velocity = walkSpeed * Time.fixedDeltaTime * (_followTarget.position - transform.position).normalized;
     }
 
     public void RunTowardsTarget()
     {
-        _rb.velocity = runSpeed * Time.fixedDeltaTime * (followTarget.position - transform.position).normalized;
+        _rb.velocity = runSpeed * Time.fixedDeltaTime * (_followTarget.position - transform.position).normalized;
     }
 
     public void LoseStamina()
@@ -112,5 +130,15 @@ public class KidController : MonoBehaviour
         float barWidth = _currentStamina / maxStamina;
 
         staminaBar.transform.localScale = new Vector2(barWidth, 1);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        _currentState.OnTriggerEnter(collision);
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        _currentState.OnTriggerExit(collision);
     }
 }

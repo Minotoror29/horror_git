@@ -18,6 +18,8 @@ public class KidRunState : KidState
 
     public override void UpdateLogic()
     {
+        base.UpdateLogic();
+
         Controller.LoseStamina();
 
         CheckTransitions();
@@ -27,23 +29,32 @@ public class KidRunState : KidState
     {
         if (Controller.CurrentStamina <= 0)
         {
-            Controller.ChangeState(new KidRecoveryState(Controller));
+            CurrentSuperstate.ChangeSubstate(new KidRecoveryState(Controller));
         }
         else
         {
-            if (Controller.TargetDistance <= Controller.StopDistance)
+            if (Controller.FollowTarget == null)
             {
-                Controller.ChangeState(new KidIdleState(Controller));
+                CurrentSuperstate.ChangeSubstate(new KidIdleState(Controller));
             }
-            else if (Controller.TargetDistance <= Controller.RunDistance)
+            else
             {
-                Controller.ChangeState(new KidWalkState(Controller));
+                if (Controller.TargetDistance <= Controller.StopDistance)
+                {
+                    CurrentSuperstate.ChangeSubstate(new KidIdleState(Controller));
+                }
+                else if (Controller.TargetDistance <= Controller.RunDistance)
+                {
+                    CurrentSuperstate.ChangeSubstate(new KidWalkState(Controller));
+                }
             }
         }
     }
 
     public override void UpdatePhysics()
     {
+        base.UpdatePhysics();
+
         Controller.RunTowardsTarget();
     }
 }
