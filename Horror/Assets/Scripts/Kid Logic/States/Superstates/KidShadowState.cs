@@ -10,6 +10,40 @@ public class KidShadowState : KidState
 
     public override void Enter()
     {
+        Controller.FollowTarget = FindNearestHideSpot();
+    }
+
+    private Transform FindNearestHideSpot()
+    {
+        if (Controller.HideSpots.Count > 0)
+        {
+            float shortestDistance = 0f;
+            HideSpot nearestSpot = null;
+
+            for (int i = 0; i < Controller.HideSpots.Count; i++)
+            {
+                float distance = (Controller.HideSpots[i].transform.position - Controller.transform.position).magnitude;
+
+                if (i == 0)
+                {
+                    shortestDistance = distance;
+                    nearestSpot = Controller.HideSpots[i];
+                }
+                else
+                {
+                    if (distance < shortestDistance)
+                    {
+                        shortestDistance = distance;
+                        nearestSpot = Controller.HideSpots[i];
+                    }
+                }
+            }
+
+            return nearestSpot.transform;
+        } else
+        {
+            return null;
+        }
     }
 
     public override void Exit()

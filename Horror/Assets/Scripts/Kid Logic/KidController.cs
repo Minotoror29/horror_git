@@ -17,7 +17,7 @@ public class KidController : MonoBehaviour
     private Transform _followTarget;
     private float _targetDistance;
 
-    public List<HideSpot> _hideSpots;
+    private List<HideSpot> _hideSpots;
 
     [Header("Movement")]
     [SerializeField] private float walkSpeed = 100f;
