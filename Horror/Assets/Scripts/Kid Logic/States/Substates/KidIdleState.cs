@@ -28,13 +28,13 @@ public class KidIdleState : KidState
 
     private void CheckTransitions()
     {
-        if (Controller.FollowTarget != null)
+        if (Controller.FollowTargets.Count > 0)
         {
-            if (Controller.TargetDistance > Controller.RunDistance)
+            if (Controller.TargetDistance > Controller.FollowTargets[0].RunDistance)
             {
                 CurrentSuperstate.ChangeSubstate(new KidRunState(Controller));
             }
-            else if (Controller.TargetDistance > Controller.StopDistance)
+            else if (Controller.TargetDistance > Controller.FollowTargets[0].StopDistance)
             {
                 CurrentSuperstate.ChangeSubstate(new KidWalkState(Controller));
             }

@@ -33,17 +33,17 @@ public class KidRunState : KidState
         }
         else
         {
-            if (Controller.FollowTarget == null)
+            if (Controller.FollowTargets.Count == 0)
             {
                 CurrentSuperstate.ChangeSubstate(new KidIdleState(Controller));
             }
             else
             {
-                if (Controller.TargetDistance <= Controller.StopDistance)
+                if (Controller.TargetDistance <= Controller.FollowTargets[0].StopDistance)
                 {
                     CurrentSuperstate.ChangeSubstate(new KidIdleState(Controller));
                 }
-                else if (Controller.TargetDistance <= Controller.RunDistance)
+                else if (Controller.TargetDistance <= Controller.FollowTargets[0].RunDistance)
                 {
                     CurrentSuperstate.ChangeSubstate(new KidWalkState(Controller));
                 }

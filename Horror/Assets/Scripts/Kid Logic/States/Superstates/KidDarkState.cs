@@ -2,18 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class KidShadowState : KidState
+public class KidDarkState : KidState
 {
-    public KidShadowState(KidController controller) : base(controller)
+    public KidDarkState(KidController controller) : base(controller)
     {
     }
 
     public override void Enter()
     {
-        Controller.FollowTarget = FindNearestHideSpot();
+        //Controller.FollowTargets = FindNearestHideSpot();
     }
 
-    private Transform FindNearestHideSpot()
+    private FollowTarget FindNearestHideSpot()
     {
         if (Controller.HideSpots.Count > 0)
         {
@@ -39,7 +39,8 @@ public class KidShadowState : KidState
                 }
             }
 
-            return nearestSpot.transform;
+            Controller.HideSpots.Clear();
+            return nearestSpot.GetComponent<FollowTarget>();
         } else
         {
             return null;
@@ -50,14 +51,14 @@ public class KidShadowState : KidState
     {
     }
 
-    public override void OnTriggerEnter(Collider2D collision)
-    {
-        base.OnTriggerEnter(collision);
+    //public override void OnTriggerEnter(Collider2D collision)
+    //{
+    //    base.OnTriggerEnter(collision);
 
-        if (collision.GetComponent<PlayerController>())
-        {
-            Controller.FollowTarget = collision.transform;
-            Controller.ChangeState(new KidLightState(Controller));
-        }
-    }
+    //    if (collision.GetComponent<PlayerController>())
+    //    {
+    //        Controller.FollowTarget = collision.GetComponent<FollowTarget>();
+    //        Controller.ChangeState(new KidLightState(Controller));
+    //    }
+    //}
 }
