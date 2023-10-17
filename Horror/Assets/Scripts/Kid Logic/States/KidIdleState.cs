@@ -19,10 +19,18 @@ public class KidIdleState : KidState
 
     public override void UpdateLogic()
     {
+        Controller.RecoverStamina();
+
+        CheckTransitions();
+    }
+
+    private void CheckTransitions()
+    {
         if (Controller.TargetDistance > Controller.RunDistance)
         {
             Controller.ChangeState(new KidRunState(Controller));
-        } else if (Controller.TargetDistance > Controller.StopDistance)
+        }
+        else if (Controller.TargetDistance > Controller.StopDistance)
         {
             Controller.ChangeState(new KidWalkState(Controller));
         }
