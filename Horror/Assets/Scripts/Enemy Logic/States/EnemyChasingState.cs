@@ -23,10 +23,16 @@ public class EnemyChasingState : EnemyState
     {
         base.UpdateLogic();
 
-        if ((_kid.transform.position - Controller.transform.position).magnitude < Controller.KillDistance)
+        if (_kid.IsHidden)
         {
-            _kid.ChangeState(new KidDeadState(_kid));
-            Controller.ChangeState(new EnemyEatingState(Controller));
+            Controller.ChangeState(new EnemyIdleState(Controller));
+        } else
+        {
+            if ((_kid.transform.position - Controller.transform.position).magnitude < Controller.KillDistance)
+            {
+                _kid.ChangeState(new KidDeadState(_kid));
+                Controller.ChangeState(new EnemyEatingState(Controller));
+            }
         }
     }
 
@@ -46,7 +52,7 @@ public class EnemyChasingState : EnemyState
         {
             if (kid == _kid)
             {
-                Controller.ChangeState(new EnemyPatrolState(Controller));
+                Controller.ChangeState(new EnemyIdleState(Controller));
             }
         }
     }

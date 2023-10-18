@@ -15,8 +15,6 @@ public class KidController : MonoBehaviour
     private List<FollowTarget> _followTargets;
     private float _targetDistance;
 
-    private List<HideSpot> _nearHideSpots;
-
     [Header("Movement")]
     [SerializeField] private float walkSpeed = 100f;
     [SerializeField] private float runSpeed = 150f;
@@ -28,11 +26,13 @@ public class KidController : MonoBehaviour
     [SerializeField] private Image staminaBar;
     private float _currentStamina;
 
+    private bool _isHidden = false;
+
     public List<FollowTarget> FollowTargets { get { return _followTargets; } set { _followTargets = value; } }
     public float TargetDistance { get { return _targetDistance; } }
-    public List<HideSpot> HideSpots { get { return _nearHideSpots; } }
     public float MaxStamina { get { return maxStamina; } }
     public float CurrentStamina { get { return _currentStamina; } }
+    public bool IsHidden { get { return _isHidden; } set { _isHidden = value; } }
 
     private void Start()
     {
@@ -53,7 +53,6 @@ public class KidController : MonoBehaviour
     {
         _rb = GetComponent<Rigidbody2D>();
         _followTargets = new();
-        _nearHideSpots = new();
         _currentStamina = maxStamina;
 
         //KidState startState = new KidDarkState(this);

@@ -13,13 +13,14 @@ public class KidHiddenState : KidState
 
     public override void Enter()
     {
+        Controller.IsHidden = true;
         Controller.StopMovement();
         Controller.transform.position = _hideSpot.transform.position;
     }
 
     public override void Exit()
     {
-        
+        Controller.IsHidden = false;
     }
 
     public override void UpdateLogic()
