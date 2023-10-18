@@ -38,15 +38,12 @@ public class KidRunFromState : KidState
             }
         } else if (Controller.FollowTargets.Count > 1)
         {
-            for (int i = 0; i < Controller.FollowTargets.Count; i++)
+            if (Controller.FollowTargets[0].Priority == 1)
             {
-                FollowTarget target = Controller.FollowTargets[i];
-
-                if (target.Priority == 1)
-                {
-                    Controller.ChangeState(new KidRunToState(Controller, target));
-                    break;
-                }
+                Controller.ChangeState(new KidRunToState(Controller, Controller.FollowTargets[0]));
+            } else
+            {
+                Controller.ChangeState(new KidRunToState(Controller, Controller.FollowTargets[1]));
             }
         }
     }

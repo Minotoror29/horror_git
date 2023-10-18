@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class KidHiddenState : KidState
 {
-    private HideSpot _hideSpot;
+    private Bush _hideSpot;
 
-    public KidHiddenState(KidController controller, HideSpot hideSpot) : base(controller)
+    public KidHiddenState(KidController controller, Bush hideSpot) : base(controller)
     {
         _hideSpot = hideSpot;
     }

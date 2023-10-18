@@ -84,9 +84,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4733674945329424292}
+  - component: {fileID: 5264361396447001968}
   - component: {fileID: 9160395326920612726}
   - component: {fileID: 6708655846127798578}
-  - component: {fileID: 5264361396447001968}
   m_Layer: 0
   m_Name: Kid
   m_TagString: Untagged
@@ -111,6 +111,26 @@ Transform:
   - {fileID: 7198004877088557406}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5264361396447001968
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3044830101791328025}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23c3abcaed248fe409e1022e6ae98f4f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _followTargets: []
+  walkSpeed: 75
+  runSpeed: 125
+  maxStamina: 10
+  staminaDepletionSpeed: 1
+  staminaRecoverySpeed: 2
+  staminaBar: {fileID: 8089049910968969693}
+  _enemiesInRange: []
 --- !u!50 &9160395326920612726
 Rigidbody2D:
   serializedVersion: 4
@@ -173,24 +193,6 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.25
---- !u!114 &5264361396447001968
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3044830101791328025}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 23c3abcaed248fe409e1022e6ae98f4f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  walkSpeed: 75
-  runSpeed: 125
-  maxStamina: 10
-  staminaDepletionSpeed: 1
-  staminaRecoverySpeed: 2
-  staminaBar: {fileID: 8089049910968969693}
 --- !u!1 &5691607014671004824
 GameObject:
   m_ObjectHideFlags: 0
