@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class EnemyChasingState : EnemyState
 {
-    private Transform _target;
+    private KidController _kid;
 
-    public EnemyChasingState(EnemyController controller, Transform target) : base(controller)
+    public EnemyChasingState(EnemyController controller, KidController target) : base(controller)
     {
-        _target = target;
+        _kid = target;
     }
 
     public override void Enter()
@@ -23,8 +23,9 @@ public class EnemyChasingState : EnemyState
     {
         base.UpdateLogic();
 
-        if ((_target.position - Controller.transform.position).magnitude < Controller.KillDistance)
+        if ((_kid.transform.position - Controller.transform.position).magnitude < Controller.KillDistance)
         {
+            _kid.ChangeState(new KidDeadState(_kid));
             Controller.ChangeState(new EnemyEatingState(Controller));
         }
     }
@@ -33,6 +34,20 @@ public class EnemyChasingState : EnemyState
     {
         base.UpdatePhysics();
 
-        Controller.RunTowardsTarget(_target);
+        Controller.RunTowardsTarget(_kid.transform);
+    }
+
+    public override void OnTriggerExit(Collider2D collision)
+    {
+        base.OnTriggerExit(collision);
+
+        KidController kid = collision.GetComponent<KidController>();
+        if (kid)
+        {
+            if (kid == _kid)
+            {
+                Controller.ChangeState(new EnemyPatrolState(Controller));
+            }
+        }
     }
 }

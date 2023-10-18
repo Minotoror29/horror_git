@@ -56,9 +56,10 @@ public class KidController : MonoBehaviour
         _nearHideSpots = new();
         _currentStamina = maxStamina;
 
-        KidState startState = new KidDarkState(this);
-        ChangeState(startState);
-        startState.ChangeSubstate(new KidIdleState(this));
+        //KidState startState = new KidDarkState(this);
+        //ChangeState(startState);
+        //startState.ChangeSubstate(new KidIdleState(this));
+        ChangeState(new KidIdleState(this));
     }
 
     public void ChangeState(KidState nextState)
@@ -110,7 +111,7 @@ public class KidController : MonoBehaviour
         _rb.velocity = runSpeed * Time.fixedDeltaTime * (_followTargets[0].transform.position - transform.position).normalized;
     }
 
-    public void RunFromTarget(Transform target)
+    public void RunFrom(Transform target)
     {
         _rb.velocity = runSpeed * Time.fixedDeltaTime * (transform.position - target.position).normalized;
     }

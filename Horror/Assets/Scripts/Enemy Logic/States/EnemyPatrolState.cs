@@ -45,9 +45,10 @@ public class EnemyPatrolState : EnemyState
     {
         base.OnTriggerEnter(collision);
 
-        if (collision.GetComponent<KidController>())
+        KidController kid = collision.GetComponent<KidController>();
+        if (kid)
         {
-            Controller.ChangeState(new EnemyChasingState(Controller, collision.transform));
+            Controller.ChangeState(new EnemyChasingState(Controller, kid));
         }
     }
 }

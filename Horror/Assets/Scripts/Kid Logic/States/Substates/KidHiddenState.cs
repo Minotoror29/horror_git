@@ -30,7 +30,7 @@ public class KidHiddenState : KidState
 
         if (Controller.FollowTargets[0] != _hideSpot)
         {
-            CurrentSuperstate.ChangeSubstate(new KidIdleState(Controller));
+            Controller.ChangeState(new KidIdleState(Controller));
         }
     }
 }

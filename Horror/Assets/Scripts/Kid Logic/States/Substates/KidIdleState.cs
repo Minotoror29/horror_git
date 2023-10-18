@@ -32,12 +32,23 @@ public class KidIdleState : KidState
         {
             if (Controller.TargetDistance > Controller.FollowTargets[0].RunDistance)
             {
-                CurrentSuperstate.ChangeSubstate(new KidRunState(Controller));
+                Controller.ChangeState(new KidRunToState(Controller, Controller.FollowTargets[0]));
             }
             else if (Controller.TargetDistance > Controller.FollowTargets[0].StopDistance)
             {
-                CurrentSuperstate.ChangeSubstate(new KidWalkState(Controller));
+                Controller.ChangeState(new KidWalkToState(Controller, Controller.FollowTargets[0]));
             }
+        }
+    }
+
+    public override void OnTriggerEnter(Collider2D collision)
+    {
+        base.OnTriggerEnter(collision);
+
+        EnemyController enemy = collision.GetComponent<EnemyController>();
+        if (enemy)
+        {
+            Controller.ChangeState(new KidRunFromState(Controller, enemy));
         }
     }
 }
