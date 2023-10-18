@@ -113,9 +113,15 @@ public class KidController : MonoBehaviour
         _rb.velocity = runSpeed * Time.fixedDeltaTime * (_followTargets[0].transform.position - transform.position).normalized;
     }
 
-    public void RunFrom(Transform target)
+    public void RunFromEnemies()
     {
-        _rb.velocity = runSpeed * Time.fixedDeltaTime * (transform.position - target.position).normalized;
+        Vector3 enemiesVectors = Vector3.zero;
+        foreach (EnemyController enemy in _enemiesInRange)
+        {
+            enemiesVectors += (enemy.transform.position - transform.position).normalized;
+        }
+
+        _rb.velocity = runSpeed * Time.fixedDeltaTime * ((transform.position - enemiesVectors.normalized) - transform.position).normalized;
     }
 
     public void LoseStamina()

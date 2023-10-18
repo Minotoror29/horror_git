@@ -52,6 +52,6 @@ public class KidRunFromState : KidState
     {
         base.UpdatePhysics();
 
-        Controller.RunFrom(_enemy.transform);
+        Controller.RunFromEnemies();
     }
 }
