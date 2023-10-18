@@ -30,7 +30,7 @@ public class EnemyPatrolState : EnemyState
 
         if ((_targetPoint - (Vector2)Controller.transform.position).magnitude < 1f)
         {
-            DeterminePatrolPoint();
+            Controller.ChangeState(new EnemyIdleState(Controller));
         }
     }
 
@@ -39,5 +39,15 @@ public class EnemyPatrolState : EnemyState
         base.UpdatePhysics();
 
         Controller.MoveTowardsTarget(_targetPoint);
+    }
+
+    public override void OnTriggerEnter(Collider2D collision)
+    {
+        base.OnTriggerEnter(collision);
+
+        if (collision.GetComponent<KidController>())
+        {
+            Controller.ChangeState(new EnemyChasingState(Controller, collision.transform));
+        }
     }
 }

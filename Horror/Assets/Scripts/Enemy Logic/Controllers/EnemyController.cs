@@ -8,12 +8,15 @@ public abstract class EnemyController : MonoBehaviour
 
     private EnemyState _currentState;
 
-    [SerializeField] private float movementSpeed = 1f;
+    [SerializeField] private float walkSpeed = 100f;
+    [SerializeField] private float runSpeed = 150f;
 
     [SerializeField] private float patrolRadius = 1f;
+    [SerializeField] private float patrolWaitTime = 2f;
     private Vector2 _patrolCenter;
 
     public float PatrolRadius { get { return patrolRadius; } }
+    public float PatrolWaitTime { get { return patrolWaitTime; } }
     public Vector2 PatrolCenter { get { return _patrolCenter; } }
 
     private void Start()
@@ -62,9 +65,29 @@ public abstract class EnemyController : MonoBehaviour
         _currentState.UpdatePhysics();
     }
 
+    public void StopMovement()
+    {
+        _rb.velocity = Vector3.zero;
+    }
+
     public void MoveTowardsTarget(Vector2 target)
     {
-        _rb.velocity = movementSpeed * Time.fixedDeltaTime * (target - (Vector2)transform.position).normalized;
+        _rb.velocity = walkSpeed * Time.fixedDeltaTime * (target - (Vector2)transform.position).normalized;
+    }
+
+    public void RunTowardsTarget(Transform target)
+    {
+        _rb.velocity = runSpeed * Time.fixedDeltaTime * (target.position - transform.position).normalized;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        _currentState.OnTriggerEnter(collision);
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        _currentState.OnTriggerExit(collision);
     }
 
     private void OnDrawGizmos()
