@@ -23,19 +23,26 @@ public class KidWalkToState : KidState
     {
         base.UpdateLogic();
 
-        if (Controller.FollowTargets.Count == 0)
+        if (Controller.EnemiesInRange.Count > 0)
         {
-            Controller.ChangeState(new KidIdleState(Controller));
+            Controller.ChangeState(new KidRunFromState(Controller, Controller.EnemiesInRange[0]));
         }
         else
         {
-            if (Controller.TargetDistance > Controller.FollowTargets[0].RunDistance)
+            if (Controller.FollowTargets.Count == 0)
             {
-                Controller.ChangeState(new KidRunToState(Controller, _target));
+                Controller.ChangeState(new KidIdleState(Controller));
             }
-            else if (Controller.TargetDistance <= Controller.FollowTargets[0].StopDistance)
+            else
             {
-                Controller.ChangeState(Controller.FollowTargets[0].EnterStopDistance(Controller));
+                if (Controller.TargetDistance > Controller.FollowTargets[0].RunDistance)
+                {
+                    Controller.ChangeState(new KidRunToState(Controller, _target));
+                }
+                else if (Controller.TargetDistance <= Controller.FollowTargets[0].StopDistance)
+                {
+                    Controller.ChangeState(Controller.FollowTargets[0].EnterStopDistance(Controller));
+                }
             }
         }
     }
@@ -47,14 +54,14 @@ public class KidWalkToState : KidState
         Controller.WalkTowardsTarget();
     }
 
-    public override void OnTriggerEnter(Collider2D collision)
-    {
-        base.OnTriggerEnter(collision);
+    //public override void OnTriggerEnter(Collider2D collision)
+    //{
+    //    base.OnTriggerEnter(collision);
 
-        EnemyController enemy = collision.GetComponent<EnemyController>();
-        if (enemy)
-        {
-            Controller.ChangeState(new KidRunFromState(Controller, enemy));
-        }
-    }
+    //    EnemyController enemy = collision.GetComponent<EnemyController>();
+    //    if (enemy)
+    //    {
+    //        Controller.ChangeState(new KidRunFromState(Controller, enemy));
+    //    }
+    //}
 }

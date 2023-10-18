@@ -28,27 +28,34 @@ public class KidIdleState : KidState
 
     private void CheckTransitions()
     {
-        if (Controller.FollowTargets.Count > 0)
+        if (Controller.EnemiesInRange.Count > 0)
         {
-            if (Controller.TargetDistance > Controller.FollowTargets[0].RunDistance)
+            Controller.ChangeState(new KidRunFromState(Controller, Controller.EnemiesInRange[0]));
+        }
+        else
+        {
+            if (Controller.FollowTargets.Count > 0)
             {
-                Controller.ChangeState(new KidRunToState(Controller, Controller.FollowTargets[0]));
-            }
-            else if (Controller.TargetDistance > Controller.FollowTargets[0].StopDistance)
-            {
-                Controller.ChangeState(new KidWalkToState(Controller, Controller.FollowTargets[0]));
+                if (Controller.TargetDistance > Controller.FollowTargets[0].RunDistance)
+                {
+                    Controller.ChangeState(new KidRunToState(Controller, Controller.FollowTargets[0]));
+                }
+                else if (Controller.TargetDistance > Controller.FollowTargets[0].StopDistance)
+                {
+                    Controller.ChangeState(new KidWalkToState(Controller, Controller.FollowTargets[0]));
+                }
             }
         }
     }
 
-    public override void OnTriggerEnter(Collider2D collision)
-    {
-        base.OnTriggerEnter(collision);
+    //public override void OnTriggerEnter(Collider2D collision)
+    //{
+    //    base.OnTriggerEnter(collision);
 
-        EnemyController enemy = collision.GetComponent<EnemyController>();
-        if (enemy)
-        {
-            Controller.ChangeState(new KidRunFromState(Controller, enemy));
-        }
-    }
+    //    EnemyController enemy = collision.GetComponent<EnemyController>();
+    //    if (enemy)
+    //    {
+    //        Controller.ChangeState(new KidRunFromState(Controller, enemy));
+    //    }
+    //}
 }

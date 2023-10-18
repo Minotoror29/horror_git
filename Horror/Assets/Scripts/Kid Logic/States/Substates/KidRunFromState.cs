@@ -57,18 +57,4 @@ public class KidRunFromState : KidState
 
         Controller.RunFrom(_enemy.transform);
     }
-
-    //public override void OnTriggerExit(Collider2D collision)
-    //{
-    //    base.OnTriggerExit(collision);
-
-    //    EnemyController enemy = collision.GetComponent<EnemyController>();
-    //    if (enemy)
-    //    {
-    //        if (enemy == _enemy)
-    //        {
-    //            Controller.ChangeState(new KidIdleState(Controller));
-    //        }
-    //    }
-    //}
 }

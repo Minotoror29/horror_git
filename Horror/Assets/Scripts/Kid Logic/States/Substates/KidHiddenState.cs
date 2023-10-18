@@ -29,7 +29,7 @@ public class KidHiddenState : KidState
 
         Controller.RecoverStamina();
 
-        if (Controller.FollowTargets[0] != _hideSpot)
+        if (Controller.FollowTargets[0] != _hideSpot && Controller.EnemiesInRange.Count == 0)
         {
             Controller.ChangeState(new KidIdleState(Controller));
         }

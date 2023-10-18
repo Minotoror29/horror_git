@@ -26,6 +26,7 @@ public class KidController : MonoBehaviour
     [SerializeField] private Image staminaBar;
     private float _currentStamina;
 
+    private List<EnemyController> _enemiesInRange;
     private bool _isHidden = false;
 
     public List<FollowTarget> FollowTargets { get { return _followTargets; } set { _followTargets = value; } }
@@ -33,6 +34,7 @@ public class KidController : MonoBehaviour
     public float MaxStamina { get { return maxStamina; } }
     public float CurrentStamina { get { return _currentStamina; } }
     public bool IsHidden { get { return _isHidden; } set { _isHidden = value; } }
+    public List<EnemyController> EnemiesInRange { get { return _enemiesInRange; } }
 
     private void Start()
     {
@@ -54,6 +56,7 @@ public class KidController : MonoBehaviour
         _rb = GetComponent<Rigidbody2D>();
         _followTargets = new();
         _currentStamina = maxStamina;
+        _enemiesInRange = new();
 
         //KidState startState = new KidDarkState(this);
         //ChangeState(startState);
@@ -144,15 +147,27 @@ public class KidController : MonoBehaviour
             _followTargets.Add(target);
         }
 
+        EnemyController enemy = collision.GetComponent<EnemyController>();
+        if (enemy)
+        {
+            _enemiesInRange.Add(enemy);
+        }
+
         _currentState.OnTriggerEnter(collision);
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
         FollowTarget target = collision.GetComponent<FollowTarget>();
-        if (target)
+        if (target && _followTargets.Contains(target))
         {
             _followTargets.Remove(target);
+        }
+
+        EnemyController enemy = collision.GetComponent<EnemyController>();
+        if (enemy && _enemiesInRange.Contains(enemy))
+        {
+            _enemiesInRange.Remove(enemy);
         }
 
         _currentState.OnTriggerExit(collision);
