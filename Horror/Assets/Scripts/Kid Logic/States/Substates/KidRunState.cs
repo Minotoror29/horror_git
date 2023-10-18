@@ -41,7 +41,7 @@ public class KidRunState : KidState
             {
                 if (Controller.TargetDistance <= Controller.FollowTargets[0].StopDistance)
                 {
-                    CurrentSuperstate.ChangeSubstate(new KidIdleState(Controller));
+                    CurrentSuperstate.ChangeSubstate(Controller.FollowTargets[0].EnterStopDistance(Controller));
                 }
                 else if (Controller.TargetDistance <= Controller.FollowTargets[0].RunDistance)
                 {

@@ -19,6 +19,16 @@ public class EnemyChasingState : EnemyState
     {
     }
 
+    public override void UpdateLogic()
+    {
+        base.UpdateLogic();
+
+        if ((_target.position - Controller.transform.position).magnitude < Controller.KillDistance)
+        {
+            Controller.ChangeState(new EnemyEatingState(Controller));
+        }
+    }
+
     public override void UpdatePhysics()
     {
         base.UpdatePhysics();

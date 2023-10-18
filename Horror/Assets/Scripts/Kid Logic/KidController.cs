@@ -95,7 +95,7 @@ public class KidController : MonoBehaviour
         _currentState.UpdatePhysics();
     }
 
-    public void StopMoving()
+    public void StopMovement()
     {
         _rb.velocity = Vector2.zero;
     }
@@ -108,6 +108,11 @@ public class KidController : MonoBehaviour
     public void RunTowardsTarget()
     {
         _rb.velocity = runSpeed * Time.fixedDeltaTime * (_followTargets[0].transform.position - transform.position).normalized;
+    }
+
+    public void RunFromTarget(Transform target)
+    {
+        _rb.velocity = runSpeed * Time.fixedDeltaTime * (transform.position - target.position).normalized;
     }
 
     public void LoseStamina()

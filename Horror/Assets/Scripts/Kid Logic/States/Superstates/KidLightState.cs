@@ -16,6 +16,16 @@ public class KidLightState : KidState
     {
     }
 
+    public override void OnTriggerEnter(Collider2D collision)
+    {
+        base.OnTriggerEnter(collision);
+
+        if (collision.GetComponent<EnemyController>())
+        {
+
+        }
+    }
+
     public override void OnTriggerExit(Collider2D collision)
     {
         base.OnTriggerExit(collision);

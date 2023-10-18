@@ -633,7 +633,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!50 &501617526
 Rigidbody2D:
   serializedVersion: 4
@@ -675,6 +675,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walkSpeed: 100
   runSpeed: 150
+  killDistance: 1
+  eatingTime: 5
   patrolRadius: 15
   patrolWaitTime: 2
 --- !u!4 &501617528
@@ -832,7 +834,6 @@ GameObject:
   - component: {fileID: 529202660}
   - component: {fileID: 529202662}
   - component: {fileID: 529202658}
-  - component: {fileID: 529202661}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -852,6 +853,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f25215c80b1ed554982ce303d25ec295, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stopDistance: 1
+  runDistance: 2.5
+  priority: 0
   movementSpeed: 150
 --- !u!4 &529202659
 Transform:
@@ -896,21 +900,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
---- !u!114 &529202661
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 529202657}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0d0e22ad19140534780fe26f41ddb9e5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  stopDistance: 1
-  runDistance: 2.5
-  priority: 0
 --- !u!58 &529202662
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -1101,11 +1090,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5218438641638396754, guid: 667d3c7ece976ac43a863849b3910bf4, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -7.65
+      value: -6.37
       objectReference: {fileID: 0}
     - target: {fileID: 5218438641638396754, guid: 667d3c7ece976ac43a863849b3910bf4, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -4.97
+      value: -2.77
       objectReference: {fileID: 0}
     - target: {fileID: 5218438641638396754, guid: 667d3c7ece976ac43a863849b3910bf4, type: 3}
       propertyPath: m_LocalPosition.z

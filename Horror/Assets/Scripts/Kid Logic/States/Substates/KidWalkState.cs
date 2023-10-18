@@ -32,7 +32,7 @@ public class KidWalkState : KidState
             }
             else if (Controller.TargetDistance <= Controller.FollowTargets[0].StopDistance)
             {
-                CurrentSuperstate.ChangeSubstate(new KidIdleState(Controller));
+                CurrentSuperstate.ChangeSubstate(Controller.FollowTargets[0].EnterStopDistance(Controller));
             }
         }
     }

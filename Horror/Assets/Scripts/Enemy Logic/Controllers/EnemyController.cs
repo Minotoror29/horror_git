@@ -11,10 +11,15 @@ public abstract class EnemyController : MonoBehaviour
     [SerializeField] private float walkSpeed = 100f;
     [SerializeField] private float runSpeed = 150f;
 
+    [SerializeField] private float killDistance = 1f;
+    [SerializeField] private float eatingTime = 5f;
+
     [SerializeField] private float patrolRadius = 1f;
     [SerializeField] private float patrolWaitTime = 2f;
     private Vector2 _patrolCenter;
 
+    public float KillDistance { get { return killDistance; } }
+    public float EatingTime { get { return eatingTime; } }
     public float PatrolRadius { get { return patrolRadius; } }
     public float PatrolWaitTime { get { return patrolWaitTime; } }
     public Vector2 PatrolCenter { get { return _patrolCenter; } }
@@ -92,6 +97,17 @@ public abstract class EnemyController : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        Gizmos.DrawWireSphere(_patrolCenter, patrolRadius);
+        Vector2 gizmoCenter;
+
+        if (_patrolCenter == Vector2.zero)
+        {
+            gizmoCenter = transform.position;
+        } else
+        {
+            gizmoCenter = _patrolCenter;
+        }
+
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(gizmoCenter, patrolRadius);
     }
 }

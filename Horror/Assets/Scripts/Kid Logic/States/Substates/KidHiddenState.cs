@@ -13,6 +13,7 @@ public class KidHiddenState : KidState
 
     public override void Enter()
     {
+        Controller.StopMovement();
         Controller.transform.position = _hideSpot.transform.position;
     }
 
@@ -21,13 +22,15 @@ public class KidHiddenState : KidState
         
     }
 
-    public override void OnTriggerEnter(Collider2D collision)
+    public override void UpdateLogic()
     {
-        base.OnTriggerEnter(collision);
+        base.UpdateLogic();
 
-        if (collision.GetComponent<PlayerController>())
+        Controller.RecoverStamina();
+
+        if (Controller.FollowTargets[0] != _hideSpot)
         {
-            Controller.ChangeState(new KidLightState(Controller));
+            CurrentSuperstate.ChangeSubstate(new KidIdleState(Controller));
         }
     }
 }

@@ -10,7 +10,7 @@ public class KidIdleState : KidState
 
     public override void Enter()
     {
-        Controller.StopMoving();
+        Controller.StopMovement();
     }
 
     public override void Exit()

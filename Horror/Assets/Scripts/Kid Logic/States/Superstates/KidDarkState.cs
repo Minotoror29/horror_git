@@ -23,9 +23,6 @@ public class KidDarkState : KidState
         if (collision.GetComponent<PlayerController>())
         {
             Controller.ChangeState(new KidLightState(Controller));
-        } else if (collision.GetComponent<HideSpot>())
-        {
-            Controller.ChangeState(new KidHiddenState(Controller, collision.GetComponent<HideSpot>()));
         }
     }
 }

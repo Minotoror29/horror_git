@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class PlayerController : MonoBehaviour
+public class PlayerController : FollowTarget
 {
     private Rigidbody2D _rb;
     private PlayerControls _playerControls;
@@ -53,5 +53,10 @@ public class PlayerController : MonoBehaviour
     private void Move()
     {
         _rb.velocity = _movementDirection * Time.fixedDeltaTime * movementSpeed;
+    }
+
+    public override KidState EnterStopDistance(KidController kid)
+    {
+        return new KidIdleState(kid);
     }
 }
