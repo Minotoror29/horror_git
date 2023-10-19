@@ -6,9 +6,9 @@ public class EnemyChasingState : EnemyState
 {
     private KidController _kid;
 
-    public EnemyChasingState(EnemyController controller, KidController target) : base(controller)
+    public EnemyChasingState(EnemyController controller, KidController kid) : base(controller)
     {
-        _kid = target;
+        _kid = kid;
     }
 
     public override void Enter()
@@ -23,7 +23,7 @@ public class EnemyChasingState : EnemyState
     {
         base.UpdateLogic();
 
-        if (_kid.IsHidden)
+        if (_kid.IsHidden && !Controller.CanEatInBushes)
         {
             Controller.ChangeState(new EnemyIdleState(Controller));
         } else
@@ -41,6 +41,17 @@ public class EnemyChasingState : EnemyState
         base.UpdatePhysics();
 
         Controller.RunTowardsTarget(_kid.transform);
+    }
+
+    public override void OnTriggerEnter(Collider2D collision)
+    {
+        base.OnTriggerEnter(collision);
+
+        PlayerController player = collision.GetComponent<PlayerController>();
+        if (player && Controller.IsAfraidOfLight)
+        {
+            Controller.ChangeState(new EnemyRunFromState(Controller, player.transform));
+        }
     }
 
     public override void OnTriggerExit(Collider2D collision)

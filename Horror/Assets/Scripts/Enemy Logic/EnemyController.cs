@@ -8,18 +8,29 @@ public abstract class EnemyController : MonoBehaviour
 
     private EnemyState _currentState;
 
+    [Header("Movement")]
     [SerializeField] private float walkSpeed = 100f;
     [SerializeField] private float runSpeed = 150f;
+    [SerializeField] private bool isAfraidOfLight = false;
+    [SerializeField] private bool isAttractedByLight = false;
 
+    [Header("Chasing")]
     [SerializeField] private float killDistance = 1f;
     [SerializeField] private float eatingTime = 5f;
+    [SerializeField] private bool canEatInBushes = false;
 
+    [Header("Patrol")]
+    [SerializeField] private bool canPatrol = true;
     [SerializeField] private float patrolRadius = 1f;
     [SerializeField] private float patrolWaitTime = 2f;
     private Vector2 _patrolCenter;
 
+    public bool IsAfraidOfLight { get { return isAfraidOfLight; } }
+    public bool IsAttractedByLight { get { return isAttractedByLight; } }
     public float KillDistance { get { return killDistance; } }
     public float EatingTime { get { return eatingTime; } }
+    public bool CanEatInBushes { get { return canEatInBushes; } }
+    public bool CanPatrol { get { return canPatrol; } }
     public float PatrolRadius { get { return patrolRadius; } }
     public float PatrolWaitTime { get { return patrolWaitTime; } }
     public Vector2 PatrolCenter { get { return _patrolCenter; } }
@@ -45,7 +56,7 @@ public abstract class EnemyController : MonoBehaviour
 
         _patrolCenter = transform.position;
 
-        ChangeState(new EnemyPatrolState(this));
+        ChangeState(new EnemyIdleState(this));
     }
 
     public void ChangeState(EnemyState nextState)
@@ -75,7 +86,7 @@ public abstract class EnemyController : MonoBehaviour
         _rb.velocity = Vector3.zero;
     }
 
-    public void MoveTowardsTarget(Vector2 target)
+    public void WalkTowardsTarget(Vector2 target)
     {
         _rb.velocity = walkSpeed * Time.fixedDeltaTime * (target - (Vector2)transform.position).normalized;
     }
@@ -83,6 +94,11 @@ public abstract class EnemyController : MonoBehaviour
     public void RunTowardsTarget(Transform target)
     {
         _rb.velocity = runSpeed * Time.fixedDeltaTime * (target.position - transform.position).normalized;
+    }
+
+    public void RunFromTarget(Transform target)
+    {
+        _rb.velocity = runSpeed * Time.fixedDeltaTime * -(target.position - transform.position).normalized;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

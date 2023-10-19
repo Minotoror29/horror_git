@@ -30,13 +30,28 @@ public class EnemyIdleState : EnemyState
             _waitTimer -= Time.deltaTime;
         } else
         {
-            Controller.ChangeState(new EnemyPatrolState(Controller));
+            if (Controller.CanPatrol || (Controller.PatrolCenter - (Vector2)Controller.transform.position).magnitude > 0.1f)
+            {
+                Controller.ChangeState(new EnemyPatrolState(Controller));
+            }
         }
     }
 
     public override void OnTriggerEnter(Collider2D collision)
     {
         base.OnTriggerEnter(collision);
+
+        PlayerController player = collision.GetComponent<PlayerController>();
+        if (player)
+        {
+            if (Controller.IsAfraidOfLight)
+            {
+                Controller.ChangeState(new EnemyRunFromState(Controller, player.transform));
+            } else if (Controller.IsAttractedByLight)
+            {
+                Controller.ChangeState(new EnemyWalkToState(Controller, player.transform));
+            }
+        }
 
         KidController kid = collision.GetComponent<KidController>();
         if (kid)

@@ -111,8 +111,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walkSpeed: 100
   runSpeed: 150
+  isAfraidOfLight: 1
   killDistance: 1
   eatingTime: 5
+  canEatInBushes: 1
   patrolRadius: 15
   patrolWaitTime: 2
 --- !u!1 &7158698084750368775

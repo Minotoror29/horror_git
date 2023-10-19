@@ -131,10 +131,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ea240f63d63b9241ba6e8d2c7e6cc28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  walkSpeed: 100
-  runSpeed: 150
+  walkSpeed: 75
+  runSpeed: 200
+  isAfraidOfLight: 0
+  isAttractedByLight: 1
   killDistance: 1
   eatingTime: 5
+  canEatInBushes: 0
+  canPatrol: 0
   patrolRadius: 0
   patrolWaitTime: 2
 --- !u!50 &1309701006592737202

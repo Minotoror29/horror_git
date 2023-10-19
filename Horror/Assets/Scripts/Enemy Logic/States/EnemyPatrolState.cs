@@ -28,7 +28,7 @@ public class EnemyPatrolState : EnemyState
     {
         base.UpdateLogic();
 
-        if ((_targetPoint - (Vector2)Controller.transform.position).magnitude < 1f)
+        if ((_targetPoint - (Vector2)Controller.transform.position).magnitude < 0.1f)
         {
             Controller.ChangeState(new EnemyIdleState(Controller));
         }
@@ -38,12 +38,25 @@ public class EnemyPatrolState : EnemyState
     {
         base.UpdatePhysics();
 
-        Controller.MoveTowardsTarget(_targetPoint);
+        Controller.WalkTowardsTarget(_targetPoint);
     }
 
     public override void OnTriggerEnter(Collider2D collision)
     {
         base.OnTriggerEnter(collision);
+
+        PlayerController player = collision.GetComponent<PlayerController>();
+        if (player)
+        {
+            if (Controller.IsAfraidOfLight)
+            {
+                Controller.ChangeState(new EnemyRunFromState(Controller, player.transform));
+            }
+            else if (Controller.IsAttractedByLight)
+            {
+                Controller.ChangeState(new EnemyWalkToState(Controller, player.transform));
+            }
+        }
 
         KidController kid = collision.GetComponent<KidController>();
         if (kid)
