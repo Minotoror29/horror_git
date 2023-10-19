@@ -13,6 +13,7 @@ public class KidRunToState : KidState
 
     public override void Enter()
     {
+        Debug.Log("Run to " + _target.gameObject.name);
     }
 
     public override void Exit()
@@ -42,17 +43,17 @@ public class KidRunToState : KidState
             }
             else
             {
-                if (Controller.FollowTargets.Count == 0)
+                if (!Controller.FollowTargets.Contains(_target))
                 {
                     Controller.ChangeState(new KidIdleState(Controller));
                 }
                 else
                 {
-                    if (Controller.TargetDistance <= _target.StopDistance)
+                    if (Controller.TargetDistance(_target.transform.position) <= _target.StopDistance)
                     {
                         Controller.ChangeState(_target.EnterStopDistance(Controller));
                     }
-                    else if (Controller.TargetDistance <= _target.RunDistance)
+                    else if (Controller.TargetDistance(_target.transform.position) <= _target.RunDistance)
                     {
                         Controller.ChangeState(new KidWalkToState(Controller, _target));
                     }
@@ -65,7 +66,7 @@ public class KidRunToState : KidState
     {
         base.UpdatePhysics();
 
-        Controller.RunTowardsTarget();
+        Controller.RunTowardsTarget(_target.transform);
     }
 
     //public override void OnTriggerEnter(Collider2D collision)

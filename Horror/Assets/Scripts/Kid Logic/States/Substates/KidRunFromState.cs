@@ -13,6 +13,7 @@ public class KidRunFromState : KidState
 
     public override void Enter()
     {
+        Debug.Log("Run from " + _enemy.gameObject.name);
     }
 
     public override void Exit()

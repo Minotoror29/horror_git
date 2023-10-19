@@ -10,6 +10,7 @@ public class KidDeadState : KidState
 
     public override void Enter()
     {
+        Debug.Log("Dead");
         Controller.StopMovement();
         Controller.gameObject.SetActive(false);
     }

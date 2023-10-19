@@ -10,6 +10,7 @@ public class KidIdleState : KidState
 
     public override void Enter()
     {
+        Debug.Log("Idle");
         Controller.StopMovement();
     }
 
@@ -36,11 +37,11 @@ public class KidIdleState : KidState
         {
             if (Controller.FollowTargets.Count > 0)
             {
-                if (Controller.TargetDistance > Controller.FollowTargets[0].RunDistance)
+                if (Controller.TargetDistance(Controller.FollowTargets[0].transform.position) > Controller.FollowTargets[0].RunDistance)
                 {
                     Controller.ChangeState(new KidRunToState(Controller, Controller.FollowTargets[0]));
                 }
-                else if (Controller.TargetDistance > Controller.FollowTargets[0].StopDistance)
+                else if (Controller.TargetDistance(Controller.FollowTargets[0].transform.position) > Controller.FollowTargets[0].StopDistance)
                 {
                     Controller.ChangeState(new KidWalkToState(Controller, Controller.FollowTargets[0]));
                 }

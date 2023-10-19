@@ -13,7 +13,7 @@ public class KidController : MonoBehaviour
     private KidState _currentState;
 
     private List<FollowTarget> _followTargets;
-    private float _targetDistance;
+    //private float _targetDistance;
 
     [Header("Movement")]
     [SerializeField] private float walkSpeed = 100f;
@@ -30,7 +30,7 @@ public class KidController : MonoBehaviour
     private bool _isHidden = false;
 
     public List<FollowTarget> FollowTargets { get { return _followTargets; } set { _followTargets = value; } }
-    public float TargetDistance { get { return _targetDistance; } }
+    //public float TargetDistance { get { return _targetDistance; } }
     public float MaxStamina { get { return maxStamina; } }
     public float CurrentStamina { get { return _currentStamina; } }
     public bool IsHidden { get { return _isHidden; } set { _isHidden = value; } }
@@ -84,13 +84,19 @@ public class KidController : MonoBehaviour
 
         if (_followTargets.Count > 0)
         {
-            _targetDistance = (_followTargets[0].transform.position - transform.position).magnitude;
+            //_targetDistance = (_followTargets[0].transform.position - transform.position).magnitude;
         } else
         {
-            _targetDistance = -1f;
+            //_targetDistance = -1f;
         }
 
         UpdateStaminaBar();
+    }
+
+    public float TargetDistance(Vector2 target)
+    {
+        Debug.Log((target - (Vector2)transform.position).magnitude);
+        return (target - (Vector2)transform.position).magnitude;
     }
 
     public void UpdatePhysics()
@@ -103,14 +109,14 @@ public class KidController : MonoBehaviour
         _rb.velocity = Vector2.zero;
     }
 
-    public void WalkTowardsTarget()
+    public void WalkTowardsTarget(Transform target)
     {
-        _rb.velocity = walkSpeed * Time.fixedDeltaTime * (_followTargets[0].transform.position - transform.position).normalized;
+        _rb.velocity = walkSpeed * Time.fixedDeltaTime * (target.position - transform.position).normalized;
     }
 
-    public void RunTowardsTarget()
+    public void RunTowardsTarget(Transform target)
     {
-        _rb.velocity = runSpeed * Time.fixedDeltaTime * (_followTargets[0].transform.position - transform.position).normalized;
+        _rb.velocity = runSpeed * Time.fixedDeltaTime * (target.position - transform.position).normalized;
     }
 
     public void RunFromEnemies()

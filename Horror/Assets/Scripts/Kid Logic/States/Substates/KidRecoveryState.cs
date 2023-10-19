@@ -10,6 +10,7 @@ public class KidRecoveryState : KidState
 
     public override void Enter()
     {
+        Debug.Log("Recovery");
         Controller.StopMovement();
     }
 

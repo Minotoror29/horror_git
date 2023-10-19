@@ -13,6 +13,7 @@ public class KidWalkToState : KidState
 
     public override void Enter()
     {
+        Debug.Log("Walk to " + _target.gameObject.name);
     }
 
     public override void Exit()
@@ -29,19 +30,19 @@ public class KidWalkToState : KidState
         }
         else
         {
-            if (Controller.FollowTargets.Count == 0)
+            if (!Controller.FollowTargets.Contains(_target))
             {
                 Controller.ChangeState(new KidIdleState(Controller));
             }
             else
             {
-                if (Controller.TargetDistance > Controller.FollowTargets[0].RunDistance)
+                if (Controller.TargetDistance(_target.transform.position) > _target.RunDistance)
                 {
                     Controller.ChangeState(new KidRunToState(Controller, _target));
                 }
-                else if (Controller.TargetDistance <= Controller.FollowTargets[0].StopDistance)
+                else if (Controller.TargetDistance(_target.transform.position) <= _target.StopDistance)
                 {
-                    Controller.ChangeState(Controller.FollowTargets[0].EnterStopDistance(Controller));
+                    Controller.ChangeState(_target.EnterStopDistance(Controller));
                 }
             }
         }
@@ -51,7 +52,7 @@ public class KidWalkToState : KidState
     {
         base.UpdatePhysics();
 
-        Controller.WalkTowardsTarget();
+        Controller.WalkTowardsTarget(_target.transform);
     }
 
     //public override void OnTriggerEnter(Collider2D collision)
