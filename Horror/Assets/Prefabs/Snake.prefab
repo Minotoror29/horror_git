@@ -109,13 +109,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f7131042bfb333459f25778d86eaf6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  walkSpeed: 100
-  runSpeed: 150
+  walkSpeed: 200
+  runSpeed: 300
   isAfraidOfLight: 1
+  isAttractedByLight: 0
   killDistance: 1
   eatingTime: 5
   canEatInBushes: 1
-  patrolRadius: 15
+  canPatrol: 1
+  patrolRadius: 25
   patrolWaitTime: 2
 --- !u!1 &7158698084750368775
 GameObject:
