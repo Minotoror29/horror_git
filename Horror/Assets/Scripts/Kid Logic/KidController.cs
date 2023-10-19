@@ -13,7 +13,6 @@ public class KidController : MonoBehaviour
     private KidState _currentState;
 
     private List<FollowTarget> _followTargets;
-    //private float _targetDistance;
 
     [Header("Movement")]
     [SerializeField] private float walkSpeed = 100f;
@@ -30,7 +29,6 @@ public class KidController : MonoBehaviour
     private bool _isHidden = false;
 
     public List<FollowTarget> FollowTargets { get { return _followTargets; } set { _followTargets = value; } }
-    //public float TargetDistance { get { return _targetDistance; } }
     public float MaxStamina { get { return maxStamina; } }
     public float CurrentStamina { get { return _currentStamina; } }
     public bool IsHidden { get { return _isHidden; } set { _isHidden = value; } }
@@ -58,9 +56,6 @@ public class KidController : MonoBehaviour
         _currentStamina = maxStamina;
         _enemiesInRange = new();
 
-        //KidState startState = new KidDarkState(this);
-        //ChangeState(startState);
-        //startState.ChangeSubstate(new KidIdleState(this));
         ChangeState(new KidIdleState(this));
     }
 
@@ -82,20 +77,11 @@ public class KidController : MonoBehaviour
 
         _followTargets = _followTargets.OrderBy(target => target.Priority).ToList();
 
-        if (_followTargets.Count > 0)
-        {
-            //_targetDistance = (_followTargets[0].transform.position - transform.position).magnitude;
-        } else
-        {
-            //_targetDistance = -1f;
-        }
-
         UpdateStaminaBar();
     }
 
     public float TargetDistance(Vector2 target)
     {
-        Debug.Log((target - (Vector2)transform.position).magnitude);
         return (target - (Vector2)transform.position).magnitude;
     }
 

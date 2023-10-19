@@ -13,7 +13,6 @@ public class KidWalkToState : KidState
 
     public override void Enter()
     {
-        Debug.Log("Walk to " + _target.gameObject.name);
     }
 
     public override void Exit()
@@ -54,15 +53,4 @@ public class KidWalkToState : KidState
 
         Controller.WalkTowardsTarget(_target.transform);
     }
-
-    //public override void OnTriggerEnter(Collider2D collision)
-    //{
-    //    base.OnTriggerEnter(collision);
-
-    //    EnemyController enemy = collision.GetComponent<EnemyController>();
-    //    if (enemy)
-    //    {
-    //        Controller.ChangeState(new KidRunFromState(Controller, enemy));
-    //    }
-    //}
 }

@@ -13,7 +13,6 @@ public class KidRunToState : KidState
 
     public override void Enter()
     {
-        Debug.Log("Run to " + _target.gameObject.name);
     }
 
     public override void Exit()
@@ -68,15 +67,4 @@ public class KidRunToState : KidState
 
         Controller.RunTowardsTarget(_target.transform);
     }
-
-    //public override void OnTriggerEnter(Collider2D collision)
-    //{
-    //    base.OnTriggerEnter(collision);
-
-    //    EnemyController enemy = collision.GetComponent<EnemyController>();
-    //    if (enemy)
-    //    {
-    //        Controller.ChangeState(new KidRunFromState(Controller, enemy));
-    //    }
-    //}
 }

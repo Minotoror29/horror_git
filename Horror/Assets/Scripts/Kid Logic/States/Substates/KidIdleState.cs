@@ -10,7 +10,6 @@ public class KidIdleState : KidState
 
     public override void Enter()
     {
-        Debug.Log("Idle");
         Controller.StopMovement();
     }
 
@@ -48,15 +47,4 @@ public class KidIdleState : KidState
             }
         }
     }
-
-    //public override void OnTriggerEnter(Collider2D collision)
-    //{
-    //    base.OnTriggerEnter(collision);
-
-    //    EnemyController enemy = collision.GetComponent<EnemyController>();
-    //    if (enemy)
-    //    {
-    //        Controller.ChangeState(new KidRunFromState(Controller, enemy));
-    //    }
-    //}
 }
