@@ -13,7 +13,7 @@ public class KidDeadState : KidState
         Controller.StopMovement();
         Controller.gameObject.SetActive(false);
 
-        Controller.GameManager.KidDeath();
+        Controller.GameManager.KidDeath(Controller);
     }
 
     public override void Exit()

@@ -37,21 +37,6 @@ public abstract class EnemyController : MonoBehaviour
     public float PatrolWaitTime { get { return patrolWaitTime; } }
     public Vector2 PatrolCenter { get { return _patrolCenter; } }
 
-    private void Start()
-    {
-        Initialize();
-    }
-
-    private void Update()
-    {
-        UpdateLogic();
-    }
-
-    private void FixedUpdate()
-    {
-        UpdatePhysics();
-    }
-
     public void Initialize()
     {
         _rb = GetComponent<Rigidbody2D>();

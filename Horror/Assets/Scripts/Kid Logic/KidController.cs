@@ -36,16 +36,6 @@ public class KidController : MonoBehaviour
     public bool IsHidden { get { return _isHidden; } set { _isHidden = value; } }
     public List<EnemyController> EnemiesInRange { get { return _enemiesInRange; } }
 
-    private void Update()
-    {
-        UpdateLogic();
-    }
-
-    private void FixedUpdate()
-    {
-        UpdatePhysics();
-    }
-
     public void Initialize(GameManager gameManager)
     {
         _gameManager = gameManager;

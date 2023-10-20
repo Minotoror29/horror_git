@@ -12,21 +12,6 @@ public class PlayerController : FollowTarget
     [SerializeField] private float movementSpeed = 150f;
     private Vector2 _movementDirection;
 
-    private void Start()
-    {
-        Initialize();
-    }
-
-    private void Update()
-    {
-        UpdateLogic();
-    }
-
-    private void FixedUpdate()
-    {
-        UpdatePhysics();
-    }
-
     public void Initialize()
     {
         _rb = GetComponent<Rigidbody2D>();
@@ -53,6 +38,11 @@ public class PlayerController : FollowTarget
     private void Move()
     {
         _rb.velocity = _movementDirection * Time.fixedDeltaTime * movementSpeed;
+    }
+
+    public void StopMovement()
+    {
+        _rb.velocity = Vector2.zero;
     }
 
     public override KidState EnterStopDistance(KidController kid)
