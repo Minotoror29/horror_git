@@ -65,11 +65,5 @@ public class EnemyIdleState : EnemyState
                 Controller.ChangeState(new EnemyWalkToState(Controller, player.transform));
             }
         }
-
-        //KidController kid = collision.GetComponent<KidController>();
-        //if (kid)
-        //{
-        //    Controller.ChangeState(new EnemyChasingState(Controller, kid));
-        //}
     }
 }

@@ -8,6 +8,7 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Rigidbody2D))]
 public class KidController : MonoBehaviour
 {
+    private GameManager _gameManager;
     private Rigidbody2D _rb;
 
     private KidState _currentState;
@@ -28,16 +29,12 @@ public class KidController : MonoBehaviour
     private List<EnemyController> _enemiesInRange;
     private bool _isHidden = false;
 
+    public GameManager GameManager { get { return _gameManager; } }
     public List<FollowTarget> FollowTargets { get { return _followTargets; } set { _followTargets = value; } }
     public float MaxStamina { get { return maxStamina; } }
     public float CurrentStamina { get { return _currentStamina; } }
     public bool IsHidden { get { return _isHidden; } set { _isHidden = value; } }
     public List<EnemyController> EnemiesInRange { get { return _enemiesInRange; } }
-
-    private void Start()
-    {
-        Initialize();
-    }
 
     private void Update()
     {
@@ -49,8 +46,9 @@ public class KidController : MonoBehaviour
         UpdatePhysics();
     }
 
-    public void Initialize()
+    public void Initialize(GameManager gameManager)
     {
+        _gameManager = gameManager;
         _rb = GetComponent<Rigidbody2D>();
         _followTargets = new();
         _currentStamina = maxStamina;
