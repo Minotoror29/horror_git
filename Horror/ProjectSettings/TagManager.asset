@@ -44,6 +44,9 @@ TagManager:
   - name: Light
     uniqueID: 812626807
     locked: 0
+  - name: Eyes
+    uniqueID: 3103467265
+    locked: 0
   - name: UI
     uniqueID: 733960605
     locked: 0

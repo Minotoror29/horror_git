@@ -25,10 +25,23 @@ public class EnemyIdleState : EnemyState
     {
         base.UpdateLogic();
 
+        if (Controller.KidsInRange.Count > 0)
+        {
+            foreach (KidController kid in Controller.KidsInRange)
+            {
+                if (!kid.IsHidden)
+                {
+                    Controller.ChangeState(new EnemyChasingState(Controller, Controller.KidsInRange[0]));
+                    break;
+                }
+            }
+        }
+
         if (_waitTimer > 0f)
         {
             _waitTimer -= Time.deltaTime;
-        } else
+        }
+        else
         {
             if (Controller.CanPatrol || (Controller.PatrolCenter - (Vector2)Controller.transform.position).magnitude > 0.1f)
             {
@@ -53,10 +66,10 @@ public class EnemyIdleState : EnemyState
             }
         }
 
-        KidController kid = collision.GetComponent<KidController>();
-        if (kid)
-        {
-            Controller.ChangeState(new EnemyChasingState(Controller, kid));
-        }
+        //KidController kid = collision.GetComponent<KidController>();
+        //if (kid)
+        //{
+        //    Controller.ChangeState(new EnemyChasingState(Controller, kid));
+        //}
     }
 }

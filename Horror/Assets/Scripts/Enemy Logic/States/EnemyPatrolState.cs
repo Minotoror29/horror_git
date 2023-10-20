@@ -28,9 +28,23 @@ public class EnemyPatrolState : EnemyState
     {
         base.UpdateLogic();
 
-        if ((_targetPoint - (Vector2)Controller.transform.position).magnitude < 0.1f)
+        if (Controller.KidsInRange.Count > 0)
         {
-            Controller.ChangeState(new EnemyIdleState(Controller));
+            foreach (KidController kid in Controller.KidsInRange)
+            {
+                if (!kid.IsHidden)
+                {
+                    Controller.ChangeState(new EnemyChasingState(Controller, Controller.KidsInRange[0]));
+                    break;
+                }
+            }
+        }
+        else
+        {
+            if ((_targetPoint - (Vector2)Controller.transform.position).magnitude < 0.1f)
+            {
+                Controller.ChangeState(new EnemyIdleState(Controller));
+            }
         }
     }
 
@@ -58,10 +72,10 @@ public class EnemyPatrolState : EnemyState
             }
         }
 
-        KidController kid = collision.GetComponent<KidController>();
-        if (kid)
-        {
-            Controller.ChangeState(new EnemyChasingState(Controller, kid));
-        }
+        //KidController kid = collision.GetComponent<KidController>();
+        //if (kid)
+        //{
+        //    Controller.ChangeState(new EnemyChasingState(Controller, kid));
+        //}
     }
 }

@@ -19,6 +19,23 @@ public class EnemyWalkToState : EnemyState
     {
     }
 
+    public override void UpdateLogic()
+    {
+        base.UpdateLogic();
+
+        if (Controller.KidsInRange.Count > 0)
+        {
+            foreach (KidController kid in Controller.KidsInRange)
+            {
+                if (!kid.IsHidden)
+                {
+                    Controller.ChangeState(new EnemyChasingState(Controller, Controller.KidsInRange[0]));
+                    break;
+                }
+            }
+        }
+    }
+
     public override void UpdatePhysics()
     {
         base.UpdatePhysics();
@@ -26,16 +43,16 @@ public class EnemyWalkToState : EnemyState
         Controller.WalkTowardsTarget(_target.position);
     }
 
-    public override void OnTriggerEnter(Collider2D collision)
-    {
-        base.OnTriggerEnter(collision);
+    //public override void OnTriggerEnter(Collider2D collision)
+    //{
+    //    base.OnTriggerEnter(collision);
 
-        KidController kid = collision.GetComponent<KidController>();
-        if (kid)
-        {
-            Controller.ChangeState(new EnemyChasingState(Controller, kid));
-        }
-    }
+    //    KidController kid = collision.GetComponent<KidController>();
+    //    if (kid)
+    //    {
+    //        Controller.ChangeState(new EnemyChasingState(Controller, kid));
+    //    }
+    //}
 
     public override void OnTriggerExit(Collider2D collision)
     {

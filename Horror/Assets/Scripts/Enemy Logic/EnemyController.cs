@@ -18,6 +18,7 @@ public abstract class EnemyController : MonoBehaviour
     [SerializeField] private float killDistance = 1f;
     [SerializeField] private float eatingTime = 5f;
     [SerializeField] private bool canEatInBushes = false;
+    private List<KidController> _kidsInRange;
 
     [Header("Patrol")]
     [SerializeField] private bool canPatrol = true;
@@ -30,6 +31,7 @@ public abstract class EnemyController : MonoBehaviour
     public float KillDistance { get { return killDistance; } }
     public float EatingTime { get { return eatingTime; } }
     public bool CanEatInBushes { get { return canEatInBushes; } }
+    public List<KidController> KidsInRange { get { return _kidsInRange; } }
     public bool CanPatrol { get { return canPatrol; } }
     public float PatrolRadius { get { return patrolRadius; } }
     public float PatrolWaitTime { get { return patrolWaitTime; } }
@@ -54,6 +56,7 @@ public abstract class EnemyController : MonoBehaviour
     {
         _rb = GetComponent<Rigidbody2D>();
 
+        _kidsInRange = new();
         _patrolCenter = transform.position;
 
         ChangeState(new EnemyIdleState(this));
@@ -103,11 +106,23 @@ public abstract class EnemyController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        KidController kid = collision.GetComponent<KidController>();
+        if (kid)
+        {
+            _kidsInRange.Add(kid);
+        }
+
         _currentState.OnTriggerEnter(collision);
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
+        KidController kid = collision.GetComponent<KidController>();
+        if (_kidsInRange.Contains(kid))
+        {
+            _kidsInRange.Remove(kid);
+        }
+
         _currentState.OnTriggerExit(collision);
     }
 
